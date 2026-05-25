@@ -37,13 +37,6 @@ export default function BookingConfirmed({ email, kid, booking, onReset }) {
               {booking.seat_a} &amp; {booking.seat_b}
             </p>
           </div>
-
-          <button
-            onClick={onReset}
-            className="mt-6 inline-flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
-          >
-            Book Another
-          </button>
         </div>
 
         {bookings.length > 0 && (
