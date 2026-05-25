@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect, useCallback } from 'react'
+import { supabase } from '../lib/supabase'
 
 const KIDS = [
   'Alice', 'Bob', 'Charlie', 'Diana', 'Ethan',
@@ -10,11 +11,21 @@ export default function KidSelect({ email, onNext }) {
   const [query, setQuery] = useState('')
   const [open, setOpen] = useState(false)
   const [highlightedIndex, setHighlightedIndex] = useState(-1)
+  const [bookedKids, setBookedKids] = useState(new Set())
   const ref = useRef(null)
   const listRef = useRef(null)
 
-  const filtered = KIDS.filter((n) =>
-    n.toLowerCase().includes(query.toLowerCase()),
+  useEffect(() => {
+    supabase
+      .from('bookings')
+      .select('kid_name')
+      .then(({ data }) => {
+        if (data) setBookedKids(new Set(data.map((b) => b.kid_name)))
+      })
+  }, [])
+
+  const filtered = KIDS.filter(
+    (n) => !bookedKids.has(n) && n.toLowerCase().includes(query.toLowerCase()),
   )
 
   const select = useCallback((name) => {
