@@ -1,18 +1,35 @@
 import { useState } from 'react'
+import { supabase } from '../lib/supabase'
 
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
 export default function EmailStep({ onNext }) {
   const [email, setEmail] = useState('')
   const [error, setError] = useState('')
+  const [loading, setLoading] = useState(false)
 
-  function handleSubmit(e) {
+  async function handleSubmit(e) {
     e.preventDefault()
     if (!EMAIL_REGEX.test(email)) {
       setError('Please enter a valid email address')
       return
     }
+    setLoading(true)
     setError('')
+    const { data, error: dbError } = await supabase
+      .from('bookings')
+      .select('id')
+      .eq('email', email)
+      .limit(1)
+    setLoading(false)
+    if (dbError) {
+      setError('Something went wrong. Please try again.')
+      return
+    }
+    if (data.length > 0) {
+      setError('This email has already been used to book seats.')
+      return
+    }
     onNext(email)
   }
 
@@ -44,9 +61,10 @@ export default function EmailStep({ onNext }) {
           </div>
           <button
             type="submit"
-            className="inline-flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2"
+            disabled={loading}
+            className="inline-flex w-full items-center justify-center rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 disabled:opacity-50"
           >
-            Continue
+            {loading ? 'Checking...' : 'Continue'}
           </button>
         </form>
       </div>
