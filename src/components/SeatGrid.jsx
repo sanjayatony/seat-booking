@@ -83,14 +83,14 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center p-4">
-      <div className="w-full max-w-2xl rounded-xl border bg-white p-8 shadow-sm">
-        <div className="mb-6 flex items-center justify-between">
+    <div className="flex min-h-screen items-start justify-center p-2 pt-6 sm:p-4 sm:pt-12">
+      <div className="w-full max-w-2xl rounded-xl border bg-white p-4 shadow-sm sm:p-8">
+        <div className="mb-4 flex items-center justify-between">
           <div>
-            <h1 className="text-2xl font-semibold tracking-tight text-gray-900">
+            <h1 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
               Select a Seat
             </h1>
-            <p className="mt-1 text-sm text-gray-500">
+            <p className="mt-1 text-xs text-gray-500 sm:text-sm">
               {kid} &middot; {email}
             </p>
           </div>
@@ -102,24 +102,25 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
           </button>
         </div>
 
-        <div className="mb-6 flex items-center justify-center gap-6 text-xs text-gray-500">
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-4 w-4 rounded border border-gray-300 bg-white" />
+        <div className="mb-4 flex items-center justify-center gap-4 text-xs text-gray-500">
+          <span className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded border border-gray-300 bg-white sm:h-4 sm:w-4" />
             Available
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-4 w-4 rounded border border-gray-400 bg-gray-900" />
+          <span className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded border border-gray-400 bg-gray-900 sm:h-4 sm:w-4" />
             Selected
           </span>
-          <span className="flex items-center gap-1.5">
-            <span className="inline-block h-4 w-4 rounded border border-gray-200 bg-gray-100" />
+          <span className="flex items-center gap-1">
+            <span className="inline-block h-3 w-3 rounded border border-gray-200 bg-gray-100 sm:h-4 sm:w-4" />
             Booked
           </span>
         </div>
-        <p className="mb-1 text-center text-sm">Stage</p>
-        <div className="mx-auto mb-8 h-2 w-full bg-gray-400 md:w-11/12"></div>
 
-        <div className="mx-auto grid w-fit grid-cols-12 gap-2">
+        <p className="mb-1 text-center text-xs text-gray-500 sm:text-sm">Stage</p>
+        <div className="mx-auto mb-4 h-2 w-full bg-gray-400 sm:mb-8"></div>
+
+        <div className="grid w-full grid-cols-12 gap-0.5 sm:gap-2">
           {Array.from({ length: ROWS }, (_, row) =>
             Array.from({ length: COLS }, (_, col) => {
               const id = seatId(row, col)
@@ -131,7 +132,7 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
                   key={id}
                   disabled={isBooked}
                   onClick={() => toggleSeat(row, col)}
-                  className={`flex h-9 w-9 items-center justify-center rounded-md text-xs font-medium transition-colors
+                  className={`aspect-square w-full rounded text-[8px] font-medium transition-colors sm:rounded-md sm:text-xs
                     ${
                       isBooked
                         ? 'cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-300'
@@ -148,12 +149,12 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
           )}
         </div>
 
-        <div className="mt-8 flex flex-col items-center gap-2">
+        <div className="mt-4 flex flex-col items-center gap-2 sm:mt-8">
           {error && <p className="text-sm text-red-500">{error}</p>}
           <button
             disabled={!selected || saving}
             onClick={handleConfirm}
-            className={`inline-flex items-center justify-center rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2
+            className={`inline-flex w-full items-center justify-center rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 sm:w-auto
               ${
                 selected && !saving
                   ? 'bg-gray-900 text-white hover:bg-gray-800'
