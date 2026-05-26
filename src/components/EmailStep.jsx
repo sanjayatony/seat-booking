@@ -76,7 +76,7 @@ export default function EmailStep({ onNext }) {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError('') }}
                 placeholder="you@example.com"
-                className="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm placeholder:text-gray-400 focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100"
+                className="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-base placeholder:text-gray-400 focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100"
               />
               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
             </div>

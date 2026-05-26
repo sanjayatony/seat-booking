@@ -118,7 +118,7 @@ export default function KidSelect({ email, onNext }) {
                 onFocus={() => setOpen(true)}
                 onKeyDown={handleKeyDown}
                 placeholder="Search by name…"
-                className="block w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-sm placeholder:text-gray-400 focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100"
+                className="block w-full rounded-xl border border-gray-200 bg-gray-50 py-3 pl-10 pr-4 text-base placeholder:text-gray-400 focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100"
               />
             </div>
 

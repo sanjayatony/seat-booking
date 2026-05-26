@@ -97,7 +97,7 @@ export default function AdminPage() {
                   value={password}
                   onChange={(e) => { setPassword(e.target.value); setAuthError('') }}
                   placeholder="Enter admin password"
-                  className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-sm shadow-sm placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                  className="mt-1 block w-full rounded-lg border border-gray-300 px-3 py-2 text-base shadow-sm placeholder:text-gray-400 focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                   autoFocus
                 />
                 {authError && <p className="mt-1.5 text-sm text-red-500">{authError}</p>}
@@ -190,14 +190,14 @@ export default function AdminPage() {
                           <input
                             value={editForm.email}
                             onChange={(e) => setEditForm((f) => ({ ...f, email: e.target.value }))}
-                            className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                            className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 text-base focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                           />
                         </td>
                         <td className="px-5 py-3">
                           <input
                             value={editForm.kid_name}
                             onChange={(e) => setEditForm((f) => ({ ...f, kid_name: e.target.value }))}
-                            className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                            className="w-full rounded-lg border border-gray-300 px-2.5 py-1.5 text-base focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                           />
                         </td>
                         <td className="px-5 py-3">
@@ -205,13 +205,13 @@ export default function AdminPage() {
                             <input
                               value={editForm.seat_a}
                               onChange={(e) => setEditForm((f) => ({ ...f, seat_a: e.target.value.toUpperCase() }))}
-                              className="w-16 rounded-lg border border-gray-300 px-2.5 py-1.5 text-center text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                              className="w-16 rounded-lg border border-gray-300 px-2.5 py-1.5 text-center text-base focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                             />
                             <span className="text-gray-400">&amp;</span>
                             <input
                               value={editForm.seat_b}
                               onChange={(e) => setEditForm((f) => ({ ...f, seat_b: e.target.value.toUpperCase() }))}
-                              className="w-16 rounded-lg border border-gray-300 px-2.5 py-1.5 text-center text-sm focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
+                              className="w-16 rounded-lg border border-gray-300 px-2.5 py-1.5 text-center text-base focus:border-gray-400 focus:outline-none focus:ring-1 focus:ring-gray-400"
                             />
                           </div>
                         </td>
@@ -283,26 +283,26 @@ export default function AdminPage() {
                       value={editForm.email}
                       onChange={(e) => setEditForm((f) => ({ ...f, email: e.target.value }))}
                       placeholder="Email"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-base focus:border-gray-400 focus:outline-none"
                     />
                     <input
                       value={editForm.kid_name}
                       onChange={(e) => setEditForm((f) => ({ ...f, kid_name: e.target.value }))}
                       placeholder="Child name"
-                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                      className="w-full rounded-lg border border-gray-300 px-3 py-2 text-base focus:border-gray-400 focus:outline-none"
                     />
                     <div className="flex gap-2">
                       <input
                         value={editForm.seat_a}
                         onChange={(e) => setEditForm((f) => ({ ...f, seat_a: e.target.value.toUpperCase() }))}
                         placeholder="Seat A"
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-center text-sm focus:border-gray-400 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-center text-base focus:border-gray-400 focus:outline-none"
                       />
                       <input
                         value={editForm.seat_b}
                         onChange={(e) => setEditForm((f) => ({ ...f, seat_b: e.target.value.toUpperCase() }))}
                         placeholder="Seat B"
-                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-center text-sm focus:border-gray-400 focus:outline-none"
+                        className="w-full rounded-lg border border-gray-300 px-3 py-2 text-center text-base focus:border-gray-400 focus:outline-none"
                       />
                     </div>
                     <div className="flex gap-2 pt-1">
