@@ -3,8 +3,10 @@ import EmailStep from './components/EmailStep'
 import KidSelect from './components/KidSelect'
 import SeatGrid from './components/SeatGrid'
 import BookingConfirmed from './components/BookingConfirmed'
+import AdminPage from './components/AdminPage'
 
 export default function App() {
+  if (window.location.pathname === '/admin') return <AdminPage />
   const [email, setEmail] = useState('')
   const [kid, setKid] = useState('')
   const [booking, setBooking] = useState(null)
