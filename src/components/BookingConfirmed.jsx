@@ -18,8 +18,8 @@ export default function BookingConfirmed({ email, kid, booking, onReset }) {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       {/* Header */}
-      <div className="bg-indigo-600 px-4 pb-20 pt-10 text-center text-white">
-        <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Whizkids 2026</p>
+      <div className="bg-amber-500 px-4 pb-20 pt-10 text-center text-white">
+        <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Whizkids 2026</p>
         <h1 className="mt-2 text-3xl font-bold">Graduation Ceremony</h1>
       </div>
 
@@ -40,24 +40,24 @@ export default function BookingConfirmed({ email, kid, booking, onReset }) {
           </p>
 
           {/* Ticket */}
-          <div className="relative overflow-hidden rounded-xl bg-indigo-600 p-5 text-white">
+          <div className="relative overflow-hidden rounded-xl bg-amber-500 p-5 text-white">
             <div className="absolute -left-4 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full bg-white/20" />
             <div className="absolute -right-4 top-1/2 h-8 w-8 -translate-y-1/2 rounded-full bg-white/20" />
 
             <div className="mb-4">
-              <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Graduate</p>
+              <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Graduate</p>
               <p className="mt-0.5 text-2xl font-bold">{kid}</p>
             </div>
             <div className="border-t border-dashed border-white/30 pt-4">
               <div className="flex items-end justify-between">
                 <div>
-                  <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Seats</p>
+                  <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Seats</p>
                   <p className="mt-0.5 text-3xl font-bold tracking-wide">
-                    {booking.seat_a} <span className="text-indigo-300">&</span> {booking.seat_b}
+                    {booking.seat_a} <span className="text-amber-300">&</span> {booking.seat_b}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Event</p>
+                  <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Event</p>
                   <p className="mt-0.5 text-sm font-semibold">Graduation 2026</p>
                 </div>
               </div>

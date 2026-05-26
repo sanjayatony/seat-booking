@@ -10,7 +10,7 @@ function StepBar({ current }) {
       {steps.map((s, i) => (
         <div key={s} className="flex items-center gap-2">
           <div className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold
-            ${i + 1 === current ? 'bg-indigo-600 text-white' : i + 1 < current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400'}`}>
+            ${i + 1 === current ? 'bg-amber-500 text-white' : i + 1 < current ? 'bg-amber-100 text-amber-500' : 'bg-gray-100 text-gray-400'}`}>
             {i + 1 < current ? '✓' : i + 1}
           </div>
           <span className={`text-xs font-medium ${i + 1 === current ? 'text-gray-900' : 'text-gray-400'}`}>{s}</span>
@@ -54,10 +54,10 @@ export default function EmailStep({ onNext }) {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       {/* Header */}
-      <div className="bg-indigo-600 px-4 pb-16 pt-10 text-center text-white">
-        <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Whizkids 2026</p>
+      <div className="bg-amber-500 px-4 pb-16 pt-10 text-center text-white">
+        <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Whizkids 2026</p>
         <h1 className="mt-2 text-3xl font-bold">Graduation Ceremony</h1>
-        <p className="mt-1 text-sm text-indigo-200">Seat Booking</p>
+        <p className="mt-1 text-sm text-amber-200">Seat Booking</p>
       </div>
 
       {/* Card */}
@@ -76,14 +76,14 @@ export default function EmailStep({ onNext }) {
                 value={email}
                 onChange={(e) => { setEmail(e.target.value); setError('') }}
                 placeholder="you@example.com"
-                className="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm placeholder:text-gray-400 focus:border-indigo-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-100"
+                className="block w-full rounded-xl border border-gray-200 bg-gray-50 px-4 py-3 text-sm placeholder:text-gray-400 focus:border-amber-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-amber-100"
               />
               {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
             </div>
             <button
               type="submit"
               disabled={loading}
-              className="inline-flex w-full items-center justify-center rounded-xl bg-indigo-600 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:opacity-60"
+              className="inline-flex w-full items-center justify-center rounded-xl bg-amber-500 px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-amber-600 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2 disabled:opacity-60"
             >
               {loading ? 'Checking…' : 'Continue →'}
             </button>

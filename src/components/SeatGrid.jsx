@@ -12,7 +12,7 @@ function StepBar({ current }) {
       {steps.map((s, i) => (
         <div key={s} className="flex items-center gap-2">
           <div className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold
-            ${i + 1 === current ? 'bg-indigo-600 text-white' : i + 1 < current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400'}`}>
+            ${i + 1 === current ? 'bg-amber-500 text-white' : i + 1 < current ? 'bg-amber-100 text-amber-500' : 'bg-gray-100 text-gray-400'}`}>
             {i + 1 < current ? '✓' : i + 1}
           </div>
           <span className={`text-xs font-medium ${i + 1 === current ? 'text-gray-900' : 'text-gray-400'}`}>{s}</span>
@@ -86,10 +86,10 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
   return (
     <div className="flex min-h-screen flex-col bg-white">
       {/* Header */}
-      <div className="bg-indigo-600 px-4 pb-14 pt-10 text-center text-white">
-        <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Whizkids 2026</p>
+      <div className="bg-amber-500 px-4 pb-14 pt-10 text-center text-white">
+        <p className="text-xs font-medium uppercase tracking-widest text-amber-200">Whizkids 2026</p>
         <h1 className="mt-2 text-3xl font-bold">Graduation Ceremony</h1>
-        <p className="mt-1 text-sm text-indigo-200">{kid}</p>
+        <p className="mt-1 text-sm text-amber-200">{kid}</p>
       </div>
 
       {/* Card */}
@@ -100,7 +100,7 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
             <StepBar current={3} />
             <button
               onClick={onReset}
-              className="text-xs font-medium text-indigo-600 hover:text-indigo-800"
+              className="text-xs font-medium text-amber-500 hover:text-amber-700"
             >
               ← Change
             </button>
@@ -116,7 +116,7 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
               Available
             </span>
             <span className="flex items-center gap-1.5">
-              <span className="inline-block h-4 w-4 rounded border-2 border-indigo-500 bg-indigo-600" />
+              <span className="inline-block h-4 w-4 rounded border-2 border-amber-500 bg-amber-500" />
               Selected
             </span>
             <span className="flex items-center gap-1.5">
@@ -162,12 +162,12 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
                           ${isPairBooked
                             ? 'cursor-not-allowed border border-gray-100 bg-gray-50 text-gray-300'
                             : isPairSelected
-                              ? 'border-2 border-indigo-500 bg-indigo-600 text-white shadow-sm shadow-indigo-200'
-                              : 'border border-gray-200 bg-white text-gray-600 hover:border-indigo-300 hover:bg-indigo-50'
+                              ? 'border-2 border-amber-500 bg-amber-500 text-white shadow-sm shadow-amber-200'
+                              : 'border border-gray-200 bg-white text-gray-600 hover:border-amber-300 hover:bg-amber-50'
                           }`}
                       >
                         <span>{id1}</span>
-                        <span className={`text-[7px] ${isPairSelected ? 'text-indigo-200' : 'text-gray-300'}`}>·</span>
+                        <span className={`text-[7px] ${isPairSelected ? 'text-amber-200' : 'text-gray-300'}`}>·</span>
                         <span>{id2}</span>
                       </button>
                     )
@@ -181,16 +181,16 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
           <div className="mt-5">
             {error && <p className="mb-2 text-center text-sm text-red-500">{error}</p>}
             {selected && (
-              <p className="mb-2 text-center text-sm font-medium text-indigo-600">
+              <p className="mb-2 text-center text-sm font-medium text-amber-500">
                 Selected: {selected[0]} & {selected[1]}
               </p>
             )}
             <button
               disabled={!selected || saving}
               onClick={handleConfirm}
-              className={`inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+              className={`inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-amber-500 focus:ring-offset-2
                 ${selected && !saving
-                  ? 'bg-indigo-600 text-white hover:bg-indigo-700'
+                  ? 'bg-amber-500 text-white hover:bg-amber-600'
                   : 'cursor-not-allowed bg-gray-100 text-gray-400'
                 }`}
             >
