@@ -5,6 +5,24 @@ const ROWS = 8
 const COLS = 12
 const ROW_LABELS = 'ABCDEFGH'
 
+function StepBar({ current }) {
+  const steps = ['Email', 'Child', 'Seat']
+  return (
+    <div className="flex items-center gap-2">
+      {steps.map((s, i) => (
+        <div key={s} className="flex items-center gap-2">
+          <div className={`flex h-6 w-6 items-center justify-center rounded-full text-xs font-semibold
+            ${i + 1 === current ? 'bg-indigo-600 text-white' : i + 1 < current ? 'bg-indigo-100 text-indigo-600' : 'bg-gray-100 text-gray-400'}`}>
+            {i + 1 < current ? '✓' : i + 1}
+          </div>
+          <span className={`text-xs font-medium ${i + 1 === current ? 'text-gray-900' : 'text-gray-400'}`}>{s}</span>
+          {i < steps.length - 1 && <div className="h-px w-4 bg-gray-200" />}
+        </div>
+      ))}
+    </div>
+  )
+}
+
 export default function SeatGrid({ email, kid, onComplete, onReset }) {
   const [booked, setBooked] = useState(new Set())
   const [selected, setSelected] = useState(null)
@@ -16,15 +34,9 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
       .from('bookings')
       .select('seat_a, seat_b')
       .then(({ data, error }) => {
-        if (error) {
-          console.error('Failed to load bookings', error)
-          return
-        }
+        if (error) { console.error('Failed to load bookings', error); return }
         const ids = new Set()
-        data.forEach((row) => {
-          ids.add(row.seat_a)
-          ids.add(row.seat_b)
-        })
+        data.forEach((row) => { ids.add(row.seat_a); ids.add(row.seat_b) })
         setBooked(ids)
       })
   }, [])
@@ -41,7 +53,6 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
   function toggleSeat(row, col) {
     const pair = pairIds(row, col)
     if (pair.some((id) => booked.has(id))) return
-
     setSelected((prev) => {
       if (!prev) return pair
       if (prev[0] === pair[0] && prev[1] === pair[1]) return null
@@ -53,121 +64,139 @@ export default function SeatGrid({ email, kid, onComplete, onReset }) {
     if (!selected) return
     setSaving(true)
     setError('')
-
     const { data, error: err } = await supabase
       .from('bookings')
-      .insert({
-        email,
-        kid_name: kid,
-        seat_a: selected[0],
-        seat_b: selected[1],
-      })
+      .insert({ email, kid_name: kid, seat_a: selected[0], seat_b: selected[1] })
       .select()
       .single()
-
     if (err) {
       setSaving(false)
-      console.error('Booking failed', err)
       setError('Failed to save booking. Please try again.')
       return
     }
-
     fetch('/api/send-confirmation', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ email, kid_name: kid, seat_a: data.seat_a, seat_b: data.seat_b }),
     }).catch((e) => console.error('Email send failed', e))
-
     setSaving(false)
     onComplete(data)
   }
 
   return (
-    <div className="flex min-h-screen items-start justify-center p-2 pt-6 sm:p-4 sm:pt-12">
-      <div className="w-full max-w-2xl rounded-xl border bg-white p-4 shadow-sm sm:p-8">
-        <div className="mb-4 flex items-center justify-between">
-          <div>
-            <h1 className="text-xl font-semibold tracking-tight text-gray-900 sm:text-2xl">
-              Select a Seat
-            </h1>
-            <p className="mt-1 text-xs text-gray-500 sm:text-sm">
-              {kid} &middot; {email}
-            </p>
+    <div className="flex min-h-screen flex-col bg-white">
+      {/* Header */}
+      <div className="bg-indigo-600 px-4 pb-14 pt-10 text-center text-white">
+        <p className="text-xs font-medium uppercase tracking-widest text-indigo-200">Whizkids 2026</p>
+        <h1 className="mt-2 text-3xl font-bold">Graduation Ceremony</h1>
+        <p className="mt-1 text-sm text-indigo-200">{kid}</p>
+      </div>
+
+      {/* Card */}
+      <div className="mx-auto -mt-8 w-full max-w-2xl px-3 pb-8 sm:px-4">
+        <div className="rounded-2xl bg-white p-4 shadow-lg ring-1 ring-black/5 sm:p-6">
+          {/* Top bar */}
+          <div className="mb-5 flex items-center justify-between">
+            <StepBar current={3} />
+            <button
+              onClick={onReset}
+              className="text-xs font-medium text-indigo-600 hover:text-indigo-800"
+            >
+              ← Change
+            </button>
           </div>
-          <button
-            onClick={onReset}
-            className="rounded-lg border border-gray-300 bg-white px-3 py-1.5 text-xs font-medium text-gray-600 transition-colors hover:bg-gray-50"
-          >
-            Change
-          </button>
-        </div>
 
-        <div className="mb-4 flex items-center justify-center gap-4 text-xs text-gray-500">
-          <span className="flex items-center gap-1">
-            <span className="inline-block h-3 w-3 rounded border border-gray-300 bg-white sm:h-4 sm:w-4" />
-            Available
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="inline-block h-3 w-3 rounded border border-gray-400 bg-gray-900 sm:h-4 sm:w-4" />
-            Selected
-          </span>
-          <span className="flex items-center gap-1">
-            <span className="inline-block h-3 w-3 rounded border border-gray-200 bg-gray-100 sm:h-4 sm:w-4" />
-            Booked
-          </span>
-        </div>
+          <h2 className="mb-1 text-lg font-semibold text-gray-900">Pick your seats</h2>
+          <p className="mb-4 text-sm text-gray-500">Tap any available pair to select</p>
 
-        <p className="mb-1 text-center text-xs text-gray-500 sm:text-sm">Stage</p>
-        <div className="mx-auto mb-4 h-2 w-full bg-gray-400 sm:mb-8"></div>
+          {/* Legend */}
+          <div className="mb-4 flex items-center gap-4 text-xs text-gray-500">
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-4 w-4 rounded border border-gray-300 bg-white" />
+              Available
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-4 w-4 rounded border-2 border-indigo-500 bg-indigo-600" />
+              Selected
+            </span>
+            <span className="flex items-center gap-1.5">
+              <span className="inline-block h-4 w-4 rounded border border-gray-200 bg-gray-100" />
+              Booked
+            </span>
+          </div>
 
-        <div className="grid w-full grid-cols-12 gap-0.5 sm:gap-2">
-          {Array.from({ length: ROWS }, (_, row) =>
-            Array.from({ length: COLS }, (_, col) => {
-              const id = seatId(row, col)
-              const isBooked = booked.has(id)
-              const isSelected = selected?.includes(id)
+          {/* Stage */}
+          <div className="mb-4">
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-400">
+              <div className="h-px flex-1 bg-gray-200" />
+              <span className="font-medium uppercase tracking-widest">STAGE</span>
+              <div className="h-px flex-1 bg-gray-200" />
+            </div>
+            <div className="mt-1.5 h-2 w-full rounded-full bg-gradient-to-r from-gray-200 via-gray-400 to-gray-200" />
+          </div>
 
-              return (
-                <button
-                  key={id}
-                  disabled={isBooked}
-                  onClick={() => toggleSeat(row, col)}
-                  className={`aspect-square w-full rounded text-[8px] font-medium transition-colors sm:rounded-md sm:text-xs
-                    ${
-                      isBooked
-                        ? 'cursor-not-allowed border border-gray-200 bg-gray-100 text-gray-300'
-                        : isSelected
-                          ? 'border border-gray-400 bg-gray-900 text-white'
-                          : 'border border-gray-300 bg-white text-gray-700 hover:border-gray-400 hover:bg-gray-50'
-                    }
-                  `}
-                >
-                  {id}
-                </button>
-              )
-            }),
-          )}
-        </div>
+          {/* Seat grid — flex rows with pair grouping */}
+          <div className="space-y-1">
+            {Array.from({ length: ROWS }, (_, row) => (
+              <div key={row} className="flex items-center gap-1 sm:gap-1.5">
+                {/* Row label */}
+                <span className="w-4 shrink-0 text-center text-[10px] font-semibold text-gray-400 sm:text-xs">
+                  {ROW_LABELS[row]}
+                </span>
+                {/* Pairs */}
+                <div className="flex flex-1 justify-between gap-1 sm:gap-2">
+                  {Array.from({ length: COLS / 2 }, (_, pairIdx) => {
+                    const col1 = pairIdx * 2
+                    const col2 = pairIdx * 2 + 1
+                    const id1 = seatId(row, col1)
+                    const id2 = seatId(row, col2)
+                    const isPairBooked = booked.has(id1) || booked.has(id2)
+                    const isPairSelected = selected?.includes(id1)
 
-        <div className="mt-4 flex flex-col items-center gap-2 sm:mt-8">
-          {error && <p className="text-sm text-red-500">{error}</p>}
-          <button
-            disabled={!selected || saving}
-            onClick={handleConfirm}
-            className={`inline-flex w-full items-center justify-center rounded-lg px-6 py-2.5 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 sm:w-auto
-              ${
-                selected && !saving
-                  ? 'bg-gray-900 text-white hover:bg-gray-800'
+                    return (
+                      <button
+                        key={pairIdx}
+                        disabled={isPairBooked}
+                        onClick={() => toggleSeat(row, col1)}
+                        className={`flex flex-1 items-center justify-center gap-0.5 rounded-md py-1.5 text-[9px] font-medium transition-all sm:gap-1 sm:rounded-lg sm:py-2 sm:text-xs
+                          ${isPairBooked
+                            ? 'cursor-not-allowed border border-gray-100 bg-gray-50 text-gray-300'
+                            : isPairSelected
+                              ? 'border-2 border-indigo-500 bg-indigo-600 text-white shadow-sm shadow-indigo-200'
+                              : 'border border-gray-200 bg-white text-gray-600 hover:border-indigo-300 hover:bg-indigo-50'
+                          }`}
+                      >
+                        <span>{id1}</span>
+                        <span className={`text-[7px] ${isPairSelected ? 'text-indigo-200' : 'text-gray-300'}`}>·</span>
+                        <span>{id2}</span>
+                      </button>
+                    )
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Confirm */}
+          <div className="mt-5">
+            {error && <p className="mb-2 text-center text-sm text-red-500">{error}</p>}
+            {selected && (
+              <p className="mb-2 text-center text-sm font-medium text-indigo-600">
+                Selected: {selected[0]} & {selected[1]}
+              </p>
+            )}
+            <button
+              disabled={!selected || saving}
+              onClick={handleConfirm}
+              className={`inline-flex w-full items-center justify-center rounded-xl px-6 py-3 text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2
+                ${selected && !saving
+                  ? 'bg-indigo-600 text-white hover:bg-indigo-700'
                   : 'cursor-not-allowed bg-gray-100 text-gray-400'
-              }
-            `}
-          >
-            {saving
-              ? 'Saving...'
-              : selected
-                ? `Confirm Seats ${selected.join(' & ')}`
-                : 'Select a seat pair'}
-          </button>
+                }`}
+            >
+              {saving ? 'Saving…' : selected ? 'Confirm Seats' : 'Select a seat pair above'}
+            </button>
+          </div>
         </div>
       </div>
     </div>
